@@ -27,6 +27,6 @@ func InterfaceTest(){
 	}
 	arr,_:=json.Marshal(comment)
 	fmt.Printf("%s",arr)
-	json.Unmarshal(arr,comment)
+	json.Unmarshal(arr,&comment)
 	fmt.Println(comment)
 }
