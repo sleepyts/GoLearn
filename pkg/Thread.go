@@ -7,15 +7,21 @@ import (
 )
 func ThreadTest1(){
 	// channel用于线程通信
-	c:=make(chan string)
+	c:=make(chan int,3)
 	go func ()  {
-		c<-"!@3123"
+		for i:=0;i<3;i++{
+			c<-i;
+			fmt.Printf("sub goroutine sen:%d, channel's len: %d,cap:%d\n", i,len(c),cap(c))
+		}
+		close(c)
+		time.Sleep(3*time.Second)
+		// channel会使线程阻塞
+		c<-566
 	}()
 	
-	for i:=0 ;i< 5;i++{
-		fmt.Printf("123+%d\n", i)
+	for i:=0;i<4;i++{
+		fmt.Printf("%d\n", <-c)
 	}
-	fmt.Println(<-c)
 
 }
 func ThreadTest() {
